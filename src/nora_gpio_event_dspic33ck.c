@@ -41,10 +41,9 @@ typedef struct
      * mask cannot be written one bit at a time: the compiler has to load the whole word,
      * mask, and store it back. IFSx and IECx are shared by every peripheral on the part --
      * on EV88G73A IFS0 alone carries the 1 ms tick, both audio DMA legs, the load-monitor
-     * time base, SPI1 RX/TX and the console UART (docs/ck_irq_register_atomicity.md
-     * section 1, development tree only -- that document is not part of the published
-     * snapshot) -- so that store puts back whatever those bits were at the load, erasing
-     * anything hardware or another context set in between.
+     * time base, SPI1 RX/TX and the console UART -- so that store puts back whatever
+     * those bits were at the load, erasing anything hardware or another context set in
+     * between.
      *
      * The flag is read and cleared through the DFP bit aliases (`_CNAIF`) in
      * nora_gpio_event_irq_clear_flag() / _irq_flag_is_set() instead, which is one
@@ -559,10 +558,9 @@ static bool nora_gpio_event_irq_get_enable(unsigned port_index, bool *enabled)
 /*
  * The if/else is load-bearing, not style: `_CNAIE = v` hands the compiler a runtime value,
  * and while dsPIC33C folds that into a single BFINS today, nothing in the C requires it --
- * the identical line is a whole-word read-modify-write on dsPIC33A, which has no BFINS
- * (docs/ck_irq_register_atomicity.md section 8, development tree only -- that document is
- * not part of the published snapshot). Written this way both arms store a
- * literal, so each is one bset.b / bclr.b whatever the compiler decides.
+ * the identical line is a whole-word read-modify-write on dsPIC33A, which has no BFINS.
+ * Written this way both arms store a literal, so each is one bset.b / bclr.b whatever
+ * the compiler decides.
  */
 static bool nora_gpio_event_irq_set_enable(unsigned port_index, bool enable)
 {
