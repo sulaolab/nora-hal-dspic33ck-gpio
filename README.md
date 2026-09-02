@@ -11,9 +11,7 @@ layer that is easy to read, test, modify, and adapt.
 
 ## Naming
 
-The public API is `nora_*` / `NORA_*`. This repository has carried that namespace
-since its first commit — there is no earlier `dspic33ck_*` public API here and
-therefore no compatibility aliases to remove.
+The public API is `nora_*` / `NORA_*`.
 
 The chip name survives in exactly two places, both deliberate:
 
@@ -39,12 +37,12 @@ and RP-first call surfaces match. What differs:
 | CN event registers | 16-bit, and the CN interrupt lines sit in different `IEC`/`IFS` words | 32-bit |
 | PPS signal set | CK's own: SPI1..4, UART1..3, CLC1..10, PWM1..8, CMP1..8, REFO1/2, REFI1/2, CAN1/2, ICM1..9, INT1..4 | the AK set (no CMP/REFO group; PWM and CLC ranges differ) |
 | RP → register slot | **not affine on every part** — see `nora_pps_find_output_rp()` below | — |
-| `nora_gpio_table` | present here | no counterpart |
+| `nora_gpio_table` | present | present |
 | `nora_pps_find_output_rp()` | present here | **not in the published AK HAL** |
 
-`nora_gpio_table.{h,c}` has no dsPIC33AK counterpart. The dsPIC33AK and dsPIC33CK
-fleets are **not** symmetric, and nothing here should be read as a claim that they
-are.
+`nora_gpio_table.{h,c}` is available in both public HALs. The dsPIC33AK and
+dsPIC33CK fleets are **not** otherwise symmetric, and nothing here should be read
+as a claim that they are.
 
 ## Status
 
